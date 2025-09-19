@@ -37,11 +37,12 @@ jobs:
       - name: Run single line script
         run: echo Hallo, tutaj Łukasz Bola speaking!
       - name: Run python script
-        run: python3 hello.py
+        run: python3 hello2.py
 
   deploy:
     runs-on: ubuntu-latest
     needs: test
+    if: ${{ always() }}
     steps:
       - uses: actions/checkout@v4
       - name: Run single line script
