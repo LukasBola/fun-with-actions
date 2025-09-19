@@ -56,3 +56,35 @@ git add .github/workflows/your-workflow.yml
 git commit -m "Disable push triggers for workflow"
 git push origin main
 ```
+
+## Zależności między jobami — `needs`
+
+Możesz ustawić kolejność wykonywania jobów w workflow za pomocą pola `needs`. Dzięki temu job B uruchomi się dopiero po pomyślnym zakończeniu jobu A.
+
+Przykład:
+
+```yaml
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo setup
+
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo test
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo deploy
+```
+
+Kilka uwag:
+
+- Job z `needs` uruchomi się tylko jeśli wskazane joby zakończyły się sukcesem.
+- Możesz podać wiele zależności: `needs: [setup, prepare]`.
+- `needs` pozwala odwołać się do outputs jobów (np. `needs.setup.outputs.myvalue`).
