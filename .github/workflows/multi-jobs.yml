@@ -31,7 +31,6 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    needs: setup
     steps:
       - uses: actions/checkout@v4
       - name: Run single line script
@@ -41,7 +40,6 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: test
     steps:
       - uses: actions/checkout@v4
       - name: Run single line script
